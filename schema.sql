@@ -28,3 +28,24 @@ ALTER TABLE animals DROP COLUMN species;
 
 ALTER TABLE animals ADD COLUMN species_id INT REFERENCES species(id) ON DELETE CASCADE;
 ALTER TABLE animals ADD COLUMN owner_id INT REFERENCES owners(id) ON DELETE CASCADE;
+
+CREATE TABLE vets (
+    id INT NOT NULL GENERATED ALWAYS AS IDENTITY,
+    name varchar(100) NOT NULL,
+    age INT NOT NULL,
+    date_of_graduation DATE NOT NULL,
+    PRIMARY KEY(id)
+);
+
+CREATE TABLE specializations (
+    id INT NOT NULL GENERATED ALWAYS AS IDENTITY,
+    species_id INTEGER REFERENCES species (id), 
+    vet_id INTEGER REFERENCES vets (id)
+);
+
+CREATE TABLE visits (
+    id INT NOT NULL GENERATED ALWAYS AS IDENTITY,
+    animals_id INTEGER REFERENCES animals (id), 
+    vet_id INTEGER REFERENCES vets (id),
+    date_of_visit DATE NOT NULL 
+);
